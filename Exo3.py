@@ -9,7 +9,7 @@ Characteristics(BaseModel):
     max_fuel_capacity: float
 
 class Car(BaseModel):
-    id: int
+    identifier: int
     brand: str
     model: str
     characteristics: Characteristics
@@ -32,8 +32,14 @@ def get_cars():
 @app.get("/cars/{car_id}", response_model=Car)
 def get_car(car_id: str):
     for car in cars_db:
-        if car.id == int(car_id):
+        if car.identifier == int(car_id):
             return car
     raise HTTPException(status_code=404, detail="The car with the given ID was not found")
 
-
+@app.put("/cars/{car_id}/characteristics", response_model=Car)
+def update_car_characteristics(car_id: str, characteristics: Characteristics):
+    for car in cars_db:
+        if car.identifier == int(car_id):
+            car.characteristics = characteristics
+            return car
+    raise HTTPException(status_code=404, detail="The car with the given ID was not found")
