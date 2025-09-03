@@ -9,7 +9,7 @@ Characteristics(BaseModel):
     max_fuel_capacity: float
 
 class Car(BaseModel):
-    identifier: int
+    identifier: str
     brand: str
     model: str
     characteristics: Characteristics
